@@ -8,7 +8,18 @@
       xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     <ui:define name="content">
-        <h1>Results for search "#{searchQueryBean.searchQuery}"</h1>
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+        <style type="text/css">
+            .ui-dataview-list{
+                border-bottom: 1px solid #010101;
+                padding: 25px 10px;
+            }
+            .detail {
+                width: 85%;
+                padding-left: 25px;
+            }
+        </style>
+        <h1>#{filmSearchResultsBean.getSearchResults().size()} results for search of "#{searchQueryBean.searchQuery}"</h1>
 
         #{filmSearchResultsBean.performSearch(searchQueryBean.searchQuery)}
         <h:form>
@@ -19,50 +30,76 @@
 
             </div>
 
-            <h:commandButton value="submit" action="filmResultsPage"/><br/>
-            #{filmSearchResultsBean.getSearchResults().size()} results<br/>
+            <h:commandButton value="submit" action="filmResultsPage"/><br/><br></br>
+            <p:dataView var="film" value="#{filmSearchResultsBean.searchResults}" rows="6" paginator="true" rowsPerPageTemplate="6,12,16"
+                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 
-            <p:dataTable value="#{filmSearchResultsBean.searchResults}" var="film" rows="6" paginator="true"
-                         rowsPerPageTemplate="6,12,18"
-                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-            >
                 <f:facet name="header">
                     List of Films
                 </f:facet>
 
-
-                <p:column>
-                    <!--                    <f:facet name="header"> Film name</f:facet>-->
-                    <p:panel header="#{film.title}">
+                <p:dataViewGridItem>
+                    <p:panel header="#{film.title}" style="text-align: center">
                         <h:panelGrid columns="1" style="width: 100%">
-                            <p:graphicImage library="images" name="film_icon.png" style="width: 5%"/>
+                            <p:graphicImage library="images" name="film_icon.png" style="width: 50%"/>
                             <h:outputText value="#{film.releaseYear}"/>
-                            <p:commandLink oncomplete="PF('filmDialog').show()" title="View Detail">
-                                <h:outputText value="More Details" styleClass="pi pi-search" style="margin:0 auto;"/>
-                                <f:setPropertyActionListener value="#{film}" target="#{filmBean.activeFilm}"/>
-                            </p:commandLink>
+
                         </h:panelGrid>
                     </p:panel>
+                </p:dataViewGridItem>
 
-                </p:column>
-                <p:dialog header="Film Info" widgetVar="filmDialog" modal="true" showEffect="fade" hideEffect="fade"
-                          resizable="false">
-                    <p:outputPanel id="filmDetail" style="text-align:center;">
-                        <p:panelGrid columns="2" rendered="#{not empty filmBean.selectedFilm}"
-                                     columnClasses="label,value">
-                            <f:facet name="header">
-                                <p:graphicImage library="images" name="film_icon.png" style="width: 10%"/>
-                            </f:facet>
-                            <h:outputText value="Film Title:"/>
-                            <h:outputText value="#{filmBean.selectedFilm.filmTitle}"/>
-                            <h:outputText value="Genre:"/>
-                            <h:outputText value="#{filmBean.selectedFilm.genre}"/>
-                            <h:outputText value="Release Year:"/>
-                            <h:outputText value="#{filmBean.selectedFilm.filmYear}"/>
-                        </p:panelGrid>
-                    </p:outputPanel>
-                </p:dialog>
-            </p:dataTable>
+                <p:dataViewListItem>
+                    <h:panelGrid columns="3" style="width:100%" columnClasses="logo, detail">
+                        <p:graphicImage library="images" name="film_icon.png" style="width: 125%"/>
+
+                        <p:outputPanel>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputText value="Film Title:"/>
+                                <h:outputText value="#{film.title}"/>
+
+                                <h:outputText value="Description:"/>
+                                <h:outputText value="#{film.description}"/>
+                            </h:panelGrid>
+                        </p:outputPanel>
+
+                    </h:panelGrid>
+                </p:dataViewListItem>
+
+
+
+
+<!--                <p:column>-->
+<!--                    <p:panel header="#{film.title}">-->
+<!--                        <h:panelGrid columns="1" style="width: 100%">-->
+<!--                            <p:graphicImage library="images" name="film_icon.png" style="width: 5%"/>-->
+<!--                            <h:outputText value="#{film.releaseYear}"/>-->
+<!--                            <p:commandLink oncomplete="PF('filmDialog').show()" title="View Detail">-->
+<!--                                <h:outputText value="More Details" styleClass="pi pi-search" style="margin:0 auto;"/>-->
+<!--                                <f:setPropertyActionListener value="#{film}" target="#{filmBean.activeFilm}"/>-->
+<!--                            </p:commandLink>-->
+<!--                        </h:panelGrid>-->
+<!--                    </p:panel>-->
+
+<!--                </p:column>-->
+<!--                <p:dialog header="Film Info" widgetVar="filmDialog" modal="true" showEffect="fade" hideEffect="fade"-->
+<!--                          resizable="false">-->
+<!--                    <p:outputPanel id="filmDetail" style="text-align:center;">-->
+<!--                        <p:panelGrid columns="2" rendered="#{not empty filmBean.selectedFilm}"-->
+<!--                                     columnClasses="label,value">-->
+<!--                            <f:facet name="header">-->
+<!--                                <p:graphicImage library="images" name="film_icon.png" style="width: 10%"/>-->
+<!--                            </f:facet>-->
+<!--                            <h:outputText value="Film Title:"/>-->
+<!--                            <h:outputText value="#{filmBean.selectedFilm.filmTitle}"/>-->
+<!--                            <h:outputText value="Genre:"/>-->
+<!--                            <h:outputText value="#{filmBean.selectedFilm.genre}"/>-->
+<!--                            <h:outputText value="Release Year:"/>-->
+<!--                            <h:outputText value="#{filmBean.selectedFilm.filmYear}"/>-->
+<!--                        </p:panelGrid>-->
+<!--                    </p:outputPanel>-->
+<!--                </p:dialog>-->
+            </p:dataView>
 
 
             <ui:repeat value="#{filmSearchResultsBean.getSearchResults()}" var="value">
