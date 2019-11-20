@@ -17,7 +17,7 @@ public class LoginService {
         Query query = entityManager.createNamedQuery("getUsernameAndPassword");
         query.setParameter("usernameInput", user.getUsername());
         query.setParameter("userPasswordInput", user.getUserPassword());
-        if (query.getResultList().isEmpty()) return "signIn";
+        if (query.getResultList().isEmpty()) return "wrongLogIn";
          else  return "welcome";
     }
 }

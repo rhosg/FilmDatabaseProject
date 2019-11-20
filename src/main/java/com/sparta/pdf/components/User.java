@@ -3,12 +3,17 @@ package com.sparta.pdf.components;
 import javax.persistence.*;
 
 
+@NamedQueries({
+        @NamedQuery(name = "getUsernameAndPassword",
+                query = "SELECT u.username, u.userPassword FROM User u WHERE u.username = :usernameInput AND u.userPassword = :userPasswordInput"
+        ),
+        @NamedQuery(name = "validationOfUsername",
+                query = "SELECT u.username FROM User u WHERE u.username = :usernameInput"),
+        @NamedQuery(name = "getEmail",
+                query = "SELECT u.email FROM User u WHERE u.email = :emailInput")
 
+})
 
-@NamedQuery(
-        name = "getUsernameAndPassword",
-        query = "SELECT u.username, u.userPassword FROM User u WHERE u.username = :usernameInput AND u.userPassword = :userPasswordInput"
-)
 @Entity
 @Table(name = "users")
 public class User {

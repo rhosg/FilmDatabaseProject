@@ -9,7 +9,7 @@
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     <ui:define name="content">
         <h:body>
-            <h1>The Web App - Login Page</h1>
+            <h1>Register Page</h1>
             <h:form>
                 First Name: <h:inputText value="#{userBean.user.firstName}"/>
                 <br/>
@@ -19,9 +19,9 @@
                 <br/>
                 Username: <h:inputText value="#{userBean.user.username}"/>
                 <br/>
-                Password: <h:inputText value="#{userBean.user.userPassword}"/>
+                Password: <h:inputSecret value="#{userBean.user.userPassword}"/>
                 <br/>
-                <h:commandButton value="Save" action="#{userBean.registerNewUser}"/>
+                <h:commandButton value="Register" action="#{userBean.registerNewUser}"/>
 
             </h:form>
         </h:body>
