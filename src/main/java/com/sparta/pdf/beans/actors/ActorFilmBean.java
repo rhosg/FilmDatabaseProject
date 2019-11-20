@@ -12,7 +12,6 @@ import java.io.Serializable;
 import java.util.List;
 
 @Named
-//@ViewScoped
 @ConversationScoped
 public class ActorFilmBean implements Serializable {
     private List<Film> filmList;

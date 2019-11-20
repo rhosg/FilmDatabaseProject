@@ -44,7 +44,7 @@
                     <p:panel header="#{film.title}" style="text-align: center">
                         <h:panelGrid columns="1" style="width: 100%">
                             <p:graphicImage library="images" name="film_icon.png" style="width: 50%"/>
-                            <h:outputText value="#{film.rentalRate}"/>
+                            <h:outputText value="Rent price £#{film.rentalRate}"/>
 
                             <p:commandLink action="#{filmBean.setActiveFilm(film)}" title="View Detail">
                                 <h:outputText value="More Details" styleClass="pi pi-search" style="margin:0 auto;"/>

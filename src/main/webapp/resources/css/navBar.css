@@ -1,15 +1,5 @@
 .navBar {
     margin-left: auto;
     margin-right: auto;
-
-}
-.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a{
-    background-color: #d91e4f;
 }
 
-.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a:active,
-.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a:hover,
-.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a:link
-{
-    background-color: #A8C8EE;
-}

@@ -29,7 +29,7 @@
                 Search by actor name: <br/><h:inputText value="#{searchQueryBean.searchQuery}"/><br/>
             </div>
 
-            <h:commandButton value="submit" action="actorResultsPage" /><br/>
+            <h:commandButton value="submit" action="actorResultsPage" /><br/><br/>
 
             <p:dataView var="actor" value="#{actorSearchResultsBean.searchResults}" rows="6" paginator="true" rowsPerPageTemplate="6,12,24"
                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -43,7 +43,7 @@
                     <h:panelGrid columns="1" style="width: 100%">
                         <p:graphicImage library="images" name="human-icon.png" style="width: 50%"/>
                         <p:commandLink action="#{actorBean.setActiveActor(actor)}" title="View Detail">
-                            <h:outputText value="More Details" styleClass="pi pi-search" style="margin:0 auto;"/>
+                            <h:outputText value="Starred in" styleClass="pi pi-search" style="margin:0 auto;"/>
                         </p:commandLink>
                     </h:panelGrid>
                 </p:panel>
@@ -58,17 +58,19 @@
                             <h:outputText value=" #{actor.firstName} #{actor.lastName}"/>
 
                             <p:growl id="msgs" showDetail="true"/>
-                            <p:fieldset legend="Films" toggleable="true" toggleSpeed="500">
+                            <p:fieldset legend="Recent Films" toggleable="true" toggleSpeed="500">
                                 <p:ajax event="toggle" update="msgs" />
                                 <h:panelGrid columns="2" cellpadding="5">
                                     <ui:repeat value="#{actorSearchResultsBean.films.get(actor)}" var="film">
                                         <h:commandLink action="#{filmBean.setActiveFilm(film)}"> #{film.getTitle()}(#{film.getReleaseYear()})</h:commandLink> <br/>
+                                        <h:outputText value="Also Starred" styleClass="pi pi-reply" style="margin:0 auto;"/>
                                     </ui:repeat>
-
                                 </h:panelGrid>
                             </p:fieldset>
-                            <br/><br/>
-
+<!--                            <br/><br/>-->
+<!--                            <p:commandLink action="#{actorBean.setActiveActor(actor)}" title="View Detail">-->
+<!--                                <h:outputText value="Also Starred" styleClass="pi pi-reply" style="margin:0 auto;"/>-->
+<!--                            </p:commandLink>-->
                         </h:panelGrid>
                     </p:outputPanel>
 
