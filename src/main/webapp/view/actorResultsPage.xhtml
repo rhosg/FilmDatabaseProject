@@ -56,21 +56,19 @@
                     <p:outputPanel>
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputText value=" #{actor.firstName} #{actor.lastName}"/>
-
                             <p:growl id="msgs" showDetail="true"/>
                             <p:fieldset legend="Recent Films" toggleable="true" toggleSpeed="500">
                                 <p:ajax event="toggle" update="msgs" />
-                                <h:panelGrid columns="2" cellpadding="5">
+                                <h:panelGrid columns="1" cellpadding="5">
                                     <ui:repeat value="#{actorSearchResultsBean.films.get(actor)}" var="film">
                                         <h:commandLink action="#{filmBean.setActiveFilm(film)}"> #{film.getTitle()}(#{film.getReleaseYear()})</h:commandLink> <br/>
-                                        <h:outputText value="Also Starred" styleClass="pi pi-reply" style="margin:0 auto;"/>
                                     </ui:repeat>
+                                    <p:commandLink action="#{actorBean.setActiveActor(actor)}" title="View Detail">
+                                    <h:outputText value="See More Film" styleClass="pi pi-arrow-right" style="margin:0 auto;"/>
+                                    </p:commandLink>
                                 </h:panelGrid>
                             </p:fieldset>
-<!--                            <br/><br/>-->
-<!--                            <p:commandLink action="#{actorBean.setActiveActor(actor)}" title="View Detail">-->
-<!--                                <h:outputText value="Also Starred" styleClass="pi pi-reply" style="margin:0 auto;"/>-->
-<!--                            </p:commandLink>-->
+                            <br/><br/>
                         </h:panelGrid>
                     </p:outputPanel>
 
