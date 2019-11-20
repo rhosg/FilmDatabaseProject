@@ -61,7 +61,7 @@ public class Film {
     )
     private List<Category> categories;
 
-    @ManyToMany(mappedBy = "actor")
+    @ManyToMany(mappedBy = "filmList")
     private List<Actor> actorList;
 
 
