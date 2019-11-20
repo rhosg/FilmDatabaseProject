@@ -7,21 +7,33 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     <ui:define name="content">
-        <f:view>
+        <style type="text/css">
+            div.welcomeSearch {
+                border: 5px solid #d91e4f;
+                margin-right: 25%;
+                margin-left: 25%;
+                padding-bottom: 5%;
+                text-align: center;
+                color: #010101;
+            }
 
-            <h:body>
+
+        </style>
+        <f:view>
+            <div class="welcomeSearch">
+
                 <h1>Welcome</h1>
 
                 <h:form>
                     Search: <h:inputText value="#{searchQueryBean.searchQuery}"/>
-                    <br/>
-                    <h:commandButton value="Search By Actor" action="actorResultsPage"/>
+                    <br/><br/>
+                    <h:commandButton value="Search By Actor" action="actorResultsPage" style="margin-right: 20px;"/>
 
                     <h:commandButton value="Search By Film" action="filmResultsPage"/>
 
                 </h:form>
 
-            </h:body>
+            </div>
         </f:view>
     </ui:define>
 </ui:composition>
