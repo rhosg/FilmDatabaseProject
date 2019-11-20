@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "actor")
@@ -34,6 +35,13 @@ public class Actor {
     @Column(name="last_update")
     private LocalDateTime lastUpdate;
 
+    @ManyToMany
+    @JoinTable(
+            name = "film_actor",
+            joinColumns = @JoinColumn(name = "actor_id"),
+            inverseJoinColumns = @JoinColumn(name = "film_id")
+    )
+    private List<Film> filmList;
 
     public int getActorId() {
         return actorId;
@@ -67,6 +75,15 @@ public class Actor {
         this.lastUpdate = lastUpdate;
     }
 
+    public List<Film> getFilmList() {
+        return filmList;
+    }
 
+    public List<Film> getLimitedFilmList(int max){
+        return filmList.subList(0,max);
+    }
 
+    public void setFilmList(List<Film> filmList) {
+        this.filmList = filmList;
+    }
 }
