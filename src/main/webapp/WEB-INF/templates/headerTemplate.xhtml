@@ -8,8 +8,22 @@
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
+    <style type="text/css">
+        .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a{
+            background-color: #d91e4f;
+            color: white;
+        }
+
+        .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a:active,
+        .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a:hover,
+        .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a:link
+        {
+            background-color:white;
+            color: #d91e4f;
+        }
+    </style>
     <div class="logo">
-        <h:graphicImage library="images" name="spartaLogo.png"/>
+        <h:graphicImage library="images" style="width: 150px" name="film-camera-logo_7108-42.jpg"/>
     </div>
     <div class="headerTitle">
         <h1>Film Search Application</h1>
@@ -26,7 +40,7 @@
                 <p:menuitem value="Search By Film" outcome="/view/filmSearchPage.xhtml">
                     <f:param name="i" value="2"/>
                 </p:menuitem>
-                <p:menuitem value="About Us" outcome="/view/actorSearchPage.xhtml">
+                <p:menuitem value="About Us" outcome="/view/aboutUs.xhtml">
                     <f:param name="i" value="3"/>
                 </p:menuitem>
                 <p:menuitem value="Sign Up" outcome="/view/register.xhtml">
@@ -35,7 +49,7 @@
                 <p:menuitem value="Login" outcome="/view/logIn.xhtml">
                     <f:param name="i" value="5"/>
                 </p:menuitem>
-                <p:menuitem value="Back" onclick="history.go(-1)">
+                <p:menuitem value="Back" icon = "fa-arrow-circle-left" onclick="history.go(-1)">
                 </p:menuitem>
             </p:tabMenu>
         </h:form>

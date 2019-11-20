@@ -32,7 +32,9 @@ public class ActorSearchResultsBean implements Serializable {
 
     public void performSearch(String searchQuery){
         searchResults = actorSearcher.doSearch(searchQuery);
-        conversation.begin();
+        if(conversation.isTransient()){
+            conversation.begin();
+        }
         populateFilms();
     }
 
