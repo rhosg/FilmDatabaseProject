@@ -2,4 +2,17 @@
     margin-left: auto;
     margin-right: auto;
 }
+.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a{
+    background-color: #d91e4f;
+    color: white;
+}
+
+.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a:active,
+.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a:hover,
+.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a:link
+{
+    background-color:white;
+    color: #d91e4f;
+}
+
 

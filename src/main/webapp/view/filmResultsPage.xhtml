@@ -10,16 +10,7 @@
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     <ui:define name="content">
         <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
-        <style type="text/css">
-            .ui-dataview-list .ui-dataview-row{
-                border-bottom: 1px solid #010101;
-                padding: 25px 10px;
-            }
-            .detail {
-                width: 85%;
-                padding-left: 25px;
-            }
-        </style>
+        <h:outputStylesheet library = "css" name = "style.css" />
 
         #{filmSearchResultsBean.performSearch(searchQueryBean.searchQuery)}
         <h1>#{filmSearchResultsBean.getSearchResults().size()} results for search of "#{searchQueryBean.searchQuery}"</h1>
@@ -44,7 +35,7 @@
                     <p:panel header="#{film.title}" style="text-align: center">
                         <h:panelGrid columns="1" style="width: 100%">
                             <p:graphicImage library="images" name="film_icon.png" style="width: 50%"/>
-                            <h:outputText value="Rent price £#{film.rentalRate}"/>
+                            <h:outputText value="Rent price: £#{film.rentalRate}"/>
 
                             <p:commandLink action="#{filmBean.setActiveFilm(film)}" title="View Detail">
                                 <h:outputText value="More Details" styleClass="pi pi-search" style="margin:0 auto;"/>
