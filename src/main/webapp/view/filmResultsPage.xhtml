@@ -6,11 +6,12 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     <ui:define name="content">
         <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
         <style type="text/css">
-            .ui-dataview-list{
+            .ui-dataview-list .ui-dataview-row{
                 border-bottom: 1px solid #010101;
                 padding: 25px 10px;
             }
@@ -19,21 +20,21 @@
                 padding-left: 25px;
             }
         </style>
-        <h1>#{filmSearchResultsBean.getSearchResults().size()} results for search of "#{searchQueryBean.searchQuery}"</h1>
 
         #{filmSearchResultsBean.performSearch(searchQueryBean.searchQuery)}
+        <h1>#{filmSearchResultsBean.getSearchResults().size()} results for search of "#{searchQueryBean.searchQuery}"</h1>
+
         <h:form>
 
             <div class="search">
-
                 Search by film name: <br/><h:inputText value="#{searchQueryBean.searchQuery}"/><br/>
-
             </div>
 
+
             <h:commandButton value="submit" action="filmResultsPage"/><br/><br></br>
-            <p:dataView var="film" value="#{filmSearchResultsBean.searchResults}" rows="6" paginator="true" rowsPerPageTemplate="6,12,16"
+            <p:dataView var="film" value="#{filmSearchResultsBean.searchResults}" rows="6" paginator="true" rowsPerPageTemplate="6,12,24"
                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                        gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+                        gridIcon="pi pi-th-large" listIcon="pi pi-bars" style="">
 
                 <f:facet name="header">
                     List of Films
@@ -43,8 +44,11 @@
                     <p:panel header="#{film.title}" style="text-align: center">
                         <h:panelGrid columns="1" style="width: 100%">
                             <p:graphicImage library="images" name="film_icon.png" style="width: 50%"/>
-                            <h:outputText value="#{film.releaseYear}"/>
+                            <h:outputText value="Rent price £#{film.rentalRate}"/>
 
+                            <p:commandLink action="#{filmBean.setActiveFilm(film)}" title="View Detail">
+                                <h:outputText value="More Details" styleClass="pi pi-search" style="margin:0 auto;"/>
+                            </p:commandLink>
                         </h:panelGrid>
                     </p:panel>
                 </p:dataViewGridItem>
@@ -60,66 +64,26 @@
 
                                 <h:outputText value="Description:"/>
                                 <h:outputText value="#{film.description}"/>
+
+                                <p:growl id="msgs" showDetail="true"/>
+                                <p:fieldset legend="Starring" toggleable="true" toggleSpeed="500">
+                                    <p:ajax event="toggle" update="msgs" />
+                                    <h:panelGrid columns="2" cellpadding="5">
+                                        <ui:repeat value="#{filmSearchResultsBean.actors.get(film)}" var="actor">
+                                            <h:commandLink action="#{actorBean.setActiveActor(actor)}">#{actor.firstName} #{actor.lastName} </h:commandLink><br/>
+                                        </ui:repeat>
+
+                                    </h:panelGrid>
+                                </p:fieldset>
+                                <br/><br/>
+
                             </h:panelGrid>
                         </p:outputPanel>
 
                     </h:panelGrid>
                 </p:dataViewListItem>
-
-
-
-
-<!--                <p:column>-->
-<!--                    <p:panel header="#{film.title}">-->
-<!--                        <h:panelGrid columns="1" style="width: 100%">-->
-<!--                            <p:graphicImage library="images" name="film_icon.png" style="width: 5%"/>-->
-<!--                            <h:outputText value="#{film.releaseYear}"/>-->
-<!--                            <p:commandLink oncomplete="PF('filmDialog').show()" title="View Detail">-->
-<!--                                <h:outputText value="More Details" styleClass="pi pi-search" style="margin:0 auto;"/>-->
-<!--                                <f:setPropertyActionListener value="#{film}" target="#{filmBean.activeFilm}"/>-->
-<!--                            </p:commandLink>-->
-<!--                        </h:panelGrid>-->
-<!--                    </p:panel>-->
-
-<!--                </p:column>-->
-<!--                <p:dialog header="Film Info" widgetVar="filmDialog" modal="true" showEffect="fade" hideEffect="fade"-->
-<!--                          resizable="false">-->
-<!--                    <p:outputPanel id="filmDetail" style="text-align:center;">-->
-<!--                        <p:panelGrid columns="2" rendered="#{not empty filmBean.selectedFilm}"-->
-<!--                                     columnClasses="label,value">-->
-<!--                            <f:facet name="header">-->
-<!--                                <p:graphicImage library="images" name="film_icon.png" style="width: 10%"/>-->
-<!--                            </f:facet>-->
-<!--                            <h:outputText value="Film Title:"/>-->
-<!--                            <h:outputText value="#{filmBean.selectedFilm.filmTitle}"/>-->
-<!--                            <h:outputText value="Genre:"/>-->
-<!--                            <h:outputText value="#{filmBean.selectedFilm.genre}"/>-->
-<!--                            <h:outputText value="Release Year:"/>-->
-<!--                            <h:outputText value="#{filmBean.selectedFilm.filmYear}"/>-->
-<!--                        </p:panelGrid>-->
-<!--                    </p:outputPanel>-->
-<!--                </p:dialog>-->
             </p:dataView>
-
-
-            <ui:repeat value="#{filmSearchResultsBean.getSearchResults()}" var="value">
-                <h1><h:commandLink action="#{filmBean.setActiveFilm(value)}">#{value.getTitle()}(#{value.getReleaseYear()})</h:commandLink></h1>
-                | #{value.getAgeRating()} | #{value.getLength()}min | Rent for £#{value.getRentalRate()} | #{filmSearchResultsBean.getCategoriesString(value)} |<br/>
-                #{value.getDescription()}
-
-                <br/>
-                <h3>Starring: </h3>
-                <ui:repeat value="#{filmSearchResultsBean.actors.get(value)}" var="actor">
-                    <h:commandLink action="#{actorBean.setActiveActor(actor)}">#{actor.firstName} #{actor.lastName} </h:commandLink><br/>
-                </ui:repeat>
-            </ui:repeat>
-
         </h:form>
     </ui:define>
 </ui:composition>
-
-
-
-
-
 </html>

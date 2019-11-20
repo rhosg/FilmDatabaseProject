@@ -32,7 +32,9 @@ public class FilmSearchResultsBean implements Serializable {
 
     public void performSearch(String searchQuery){
         searchResults = filmSearcher.doSearch(searchQuery);
-        conversation.begin();
+        if(conversation.isTransient()){
+            conversation.begin();
+        }
         populateActors();
     }
 
@@ -43,7 +45,9 @@ public class FilmSearchResultsBean implements Serializable {
     private void populateActors(){
         actors = new HashMap<>();
         for(Film film:searchResults){
-            actors.put(film,filmActorRetriever.getLimitedActorsByFilmId(film.getFilmId(),5));
+//            actors.put(film,filmActorRetriever.getLimitedActorsByFilmId(film.getFilmId(),5));
+            actors.put(film,filmActorRetriever.getActorsByFilmId(film.getFilmId()));
+
         }
     }
 

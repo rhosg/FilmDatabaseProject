@@ -4,35 +4,80 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     <ui:define name="content">
-        <h1>Results for search "#{searchQueryBean.searchQuery}"</h1>
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+        <style type="text/css">
+            .ui-dataview-list .ui-dataview-row{
+                border-bottom: 1px solid #010101;
+                padding: 25px 10px;
+            }
+            .detail {
+                width: 85%;
+                padding-left: 25px;
+            }
+        </style>
 
         #{actorSearchResultsBean.performSearch(searchQueryBean.searchQuery)}
+        <h1> #{actorSearchResultsBean.getSearchResults().size()} results for search "#{searchQueryBean.searchQuery}"</h1>
         <h:form>
 
             <div class="search">
-
                 Search by actor name: <br/><h:inputText value="#{searchQueryBean.searchQuery}"/><br/>
-
             </div>
 
-            <h:commandButton value="submit" action="actorResultsPage" /><br/>
-            #{actorSearchResultsBean.getSearchResults().size()} results<br/>
+            <h:commandButton value="submit" action="actorResultsPage" /><br/><br/>
 
-            <ui:repeat value="#{actorSearchResultsBean.getSearchResults()}" var="value">
-                <h1><h:commandLink action="#{actorBean.setActiveActor(value)}">#{value.getFirstName()} #{value.getLastName()}</h:commandLink></h1>
+            <p:dataView var="actor" value="#{actorSearchResultsBean.searchResults}" rows="6" paginator="true" rowsPerPageTemplate="6,12,24"
+                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+            <f:facet name="header">
+                List of Actors
+            </f:facet>
 
-                <h3>Films: </h3>
-                <ui:repeat value="#{actorSearchResultsBean.films.get(value)}" var="film">
-                    <h:commandLink action="#{filmBean.setActiveFilm(film)}"> #{film.getTitle()}(#{film.getReleaseYear()})</h:commandLink> <br/>
-                </ui:repeat>
-            </ui:repeat>
+            <p:dataViewGridItem>
+                <p:panel header="#{actor.firstName} #{actor.lastName}" style="text-align: center">
+                    <h:panelGrid columns="1" style="width: 100%">
+                        <p:graphicImage library="images" name="human-icon.png" style="width: 50%"/>
+                        <p:commandLink action="#{actorBean.setActiveActor(actor)}" title="View Detail">
+                            <h:outputText value="Starred in" styleClass="pi pi-search" style="margin:0 auto;"/>
+                        </p:commandLink>
+                    </h:panelGrid>
+                </p:panel>
+            </p:dataViewGridItem>
 
+            <p:dataViewListItem>
+                <h:panelGrid columns="3" style="width:100%" columnClasses="logo, detail">
+                    <p:graphicImage library="images" name="human-icon.png" style="width: 125%"/>
+
+                    <p:outputPanel>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputText value=" #{actor.firstName} #{actor.lastName}"/>
+
+                            <p:growl id="msgs" showDetail="true"/>
+                            <p:fieldset legend="Recent Films" toggleable="true" toggleSpeed="500">
+                                <p:ajax event="toggle" update="msgs" />
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <ui:repeat value="#{actorSearchResultsBean.films.get(actor)}" var="film">
+                                        <h:commandLink action="#{filmBean.setActiveFilm(film)}"> #{film.getTitle()}(#{film.getReleaseYear()})</h:commandLink> <br/>
+                                        <h:outputText value="Also Starred" styleClass="pi pi-reply" style="margin:0 auto;"/>
+                                    </ui:repeat>
+                                </h:panelGrid>
+                            </p:fieldset>
+<!--                            <br/><br/>-->
+<!--                            <p:commandLink action="#{actorBean.setActiveActor(actor)}" title="View Detail">-->
+<!--                                <h:outputText value="Also Starred" styleClass="pi pi-reply" style="margin:0 auto;"/>-->
+<!--                            </p:commandLink>-->
+                        </h:panelGrid>
+                    </p:outputPanel>
+
+                </h:panelGrid>
+            </p:dataViewListItem>
+            </p:dataView>
         </h:form>
-
-
     </ui:define>
 </ui:composition>
 </html>
