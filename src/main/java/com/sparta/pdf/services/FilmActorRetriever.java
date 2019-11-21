@@ -13,6 +13,7 @@ import java.util.List;
 
 @Named
 @Stateless
+@Deprecated
 public class FilmActorRetriever implements Serializable {
 
     @PersistenceContext
@@ -31,15 +32,15 @@ public class FilmActorRetriever implements Serializable {
         return query.getResultList();
     }
 
-    public List<Actor> getLimitedActorsByFilmId(int filmId,int numberOfElements){
-        List<Actor> allActors = getActorsByFilmId(filmId);
-        return allActors.size()<=numberOfElements?allActors:allActors.subList(0,numberOfElements);
-    }
-
-    public List<Film> getLimitedFilmsByActorId(int actorId,int numberOfElements){
-        List<Film> allFilms = getFilmsByActorId(actorId);
-        return allFilms.size()<=numberOfElements?allFilms:allFilms.subList(0,numberOfElements);
-    }
+//    public List<Actor> getLimitedActorsByFilmId(int filmId,int numberOfElements){
+//        List<Actor> allActors = getActorsByFilmId(filmId);
+//        return allActors.size()<=numberOfElements?allActors:allActors.subList(0,numberOfElements);
+//    }
+//
+//    public List<Film> getLimitedFilmsByActorId(int actorId,int numberOfElements){
+//        List<Film> allFilms = getFilmsByActorId(actorId);
+//        return allFilms.size()<=numberOfElements?allFilms:allFilms.subList(0,numberOfElements);
+//    }
 
 
 }

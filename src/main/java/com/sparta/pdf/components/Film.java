@@ -61,6 +61,10 @@ public class Film {
     )
     private List<Category> categories;
 
+    @ManyToMany(mappedBy = "filmList")
+    private List<Actor> actorList;
+
+
     public int getFilmId() {
         return filmId;
     }
@@ -188,4 +192,18 @@ public class Film {
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
+
+    public List<Actor> getActorList() {
+        return actorList;
+    }
+
+    public List<Actor> getLimitedActorList(int max) {
+        return actorList.subList(0,max);
+    }
+
+    public void setActorList(List<Actor> actorList) {
+        this.actorList = actorList;
+    }
+
+
 }

@@ -2,7 +2,6 @@ package com.sparta.pdf.beans.films;
 
 import com.sparta.pdf.components.Actor;
 import com.sparta.pdf.components.Film;
-import com.sparta.pdf.services.FilmActorRetriever;
 import com.sparta.pdf.services.FilmSearcher;
 
 import javax.enterprise.context.Conversation;
@@ -21,10 +20,10 @@ import java.util.Map;
 public class FilmSearchResultsBean implements Serializable {
     @Inject
     private FilmSearcher filmSearcher;
-    @Inject
-    private FilmActorRetriever filmActorRetriever;
+//    @Inject
+//    private FilmActorRetriever filmActorRetriever;
     private List<Film> searchResults=new ArrayList<>();
-    private Map<Film,List<Actor>> actors;
+//    private Map<Film,List<Actor>> actors;
     //private Map<Film,List<Category>> categories;
 
     @Inject
@@ -35,30 +34,30 @@ public class FilmSearchResultsBean implements Serializable {
         if(conversation.isTransient()){
             conversation.begin();
         }
-        populateActors();
+//        populateActors();
     }
 
 
 
 
 
-    private void populateActors(){
-        actors = new HashMap<>();
-        for(Film film:searchResults){
-//            actors.put(film,filmActorRetriever.getLimitedActorsByFilmId(film.getFilmId(),5));
-            actors.put(film,filmActorRetriever.getActorsByFilmId(film.getFilmId()));
-
-        }
-    }
+//    private void populateActors(){
+//        actors = new HashMap<>();
+//        for(Film film:searchResults){
+////            actors.put(film,filmActorRetriever.getLimitedActorsByFilmId(film.getFilmId(),5));
+//            actors.put(film,filmActorRetriever.getActorsByFilmId(film.getFilmId()));
+//
+//        }
+//    }
 
     public List<Film> getSearchResults(){
         return searchResults;
     }
 
 
-    public Map<Film,List<Actor>> getActors(){
-        return actors;
-    }
+//    public Map<Film,List<Actor>> getActors(){
+//        return actors;
+//    }
 
     public String getCategoriesString(Film film) {
         String output = "";

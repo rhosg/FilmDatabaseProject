@@ -13,6 +13,7 @@ import java.util.List;
 
 @Named
 @ConversationScoped
+@Deprecated
 public class ActorFilmBean implements Serializable {
     private List<Film> filmList;
     @Inject

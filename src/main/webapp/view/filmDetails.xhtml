@@ -7,19 +7,24 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="/WEB-INF/templates/template.xhtml">
     <ui:define name="content">
-        <h1>#{filmBean.activeFilm.getTitle()}(#{filmBean.activeFilm.releaseYear})</h1>
-        #{filmBean.activeFilm.getDescription()}<br/>
-        Age Rating: #{filmBean.activeFilm.getAgeRating()}<br/>
-        Movie Duration: #{filmBean.activeFilm.getLength()}<br/>
+        <h1>#{filmBean.activeFilm.title}(#{filmBean.activeFilm.releaseYear})</h1>
+        #{filmBean.activeFilm.description}<br/>
+        Age Rating: #{filmBean.activeFilm.ageRating}<br/>
+        Movie Duration: #{filmBean.activeFilm.length}<br/>
         Genre(s): #{filmBean.getCategoriesString()}<br/>
-        Special Features: #{filmBean.activeFilm.getSpecialFeatures()}
+        Special Features: #{filmBean.activeFilm.specialFeatures}<br/>
+        Language: #{filmBean.activeFilm.language}
+        <br/><br/>
+        <h3>Rental Details</h3>
+        Rental Cost: £#{filmBean.activeFilm.rentalRate} <br/>
+        Rental Length: #{filmBean.activeFilm.rentalDuration}
 
 
 
-        #{filmActorBean.setActorList(filmBean.activeFilm)}
+<!--        #{filmActorBean.setActorList(filmBean.activeFilm)}-->
         <h2>Starring: </h2>
         <h:form>
-        <ui:repeat value="#{filmActorBean.actorList}" var="actor">
+        <ui:repeat value="#{filmBean.activeFilm.actorList}" var="actor">
             <h:commandLink action="#{actorBean.setActiveActor(actor)}">#{actor.firstName} #{actor.lastName}</h:commandLink><br/>
 
         </ui:repeat>
