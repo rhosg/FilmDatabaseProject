@@ -56,16 +56,30 @@
                                 <h:outputText value="Description:"/>
                                 <h:outputText value="#{film.description}"/>
 
+                                <h:outputText value="Genre:"/>
+                                <h:outputText value="#{filmSearchResultsBean.getCategoriesString(film)}"/>
+
+                                <h:outputText value="Age Rating:"/>
+                                <h:outputText value="#{film.ageRating}"/>
+
+                                <h:outputText value="Language:"/>
+                                <h:outputText value="#{film.language.languageName}"/>
+
                                 <p:growl id="msgs" showDetail="true"/>
                                 <p:fieldset legend="Starring" toggleable="true" toggleSpeed="500">
                                     <p:ajax event="toggle" update="msgs" />
                                     <h:panelGrid columns="2" cellpadding="5">
-                                        <ui:repeat value="#{filmSearchResultsBean.actors.get(film)}" var="actor">
+                                        <ui:repeat value="#{film.actorList}" var="actor">
                                             <h:commandLink action="#{actorBean.setActiveActor(actor)}">#{actor.firstName} #{actor.lastName} </h:commandLink><br/>
                                         </ui:repeat>
 
+
+
                                     </h:panelGrid>
                                 </p:fieldset>
+                                <p:commandLink action="#{filmBean.setActiveFilm(film)}" title="View Detail">
+                                    <h:outputText value="More Details" styleClass="pi pi-search" style="margin:0 auto;"/>
+                                </p:commandLink>
                                 <br/><br/>
 
                             </h:panelGrid>

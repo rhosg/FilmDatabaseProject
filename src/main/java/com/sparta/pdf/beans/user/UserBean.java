@@ -6,12 +6,14 @@ import com.sparta.pdf.services.LoginService;
 import com.sparta.pdf.services.RegistrationService;
 
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 
 @Named
-@RequestScoped
-public class UserBean {
+@SessionScoped
+public class UserBean implements Serializable {
 
     @Inject
     private RegistrationService registrationService;
@@ -30,5 +32,17 @@ public class UserBean {
     }
     public String validateUser(){
         return loginService.validateUser(user);
+    }
+
+    public String getWelcomeUser(){
+        if(user.getFirstName()!=null && user.getLastName()!=null){
+            return "Welcome " + user.getFirstName() + " " + user.getLastName();
+        }
+        return "";
+    }
+
+    public String logOut(){
+        user = new User();
+        return "welcome";
     }
 }

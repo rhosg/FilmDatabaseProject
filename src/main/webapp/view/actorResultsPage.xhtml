@@ -60,7 +60,7 @@
                             <p:fieldset legend="Recent Films" toggleable="true" toggleSpeed="500">
                                 <p:ajax event="toggle" update="msgs" />
                                 <h:panelGrid columns="1" cellpadding="5">
-                                    <ui:repeat value="#{actorSearchResultsBean.films.get(actor)}" var="film">
+                                    <ui:repeat value="#{actor.getLimitedFilmList(5)}" var="film">
                                         <h:commandLink action="#{filmBean.setActiveFilm(film)}"> #{film.getTitle()}(#{film.getReleaseYear()})</h:commandLink> <br/>
                                     </ui:repeat>
                                     <p:commandLink action="#{actorBean.setActiveActor(actor)}" title="View Detail">

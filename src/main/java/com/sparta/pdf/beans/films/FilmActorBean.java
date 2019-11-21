@@ -14,6 +14,7 @@ import java.util.List;
 @Named
 //@ViewScoped
 @ConversationScoped
+@Deprecated
 public class FilmActorBean implements Serializable {
 
     private List<Actor> actorList;

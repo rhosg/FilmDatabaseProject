@@ -7,10 +7,11 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.io.Serializable;
 
 @Named
 @Stateless
-public class LoginService {
+public class LoginService implements Serializable {
     @PersistenceContext
     EntityManager entityManager;
     public String validateUser(User user) {

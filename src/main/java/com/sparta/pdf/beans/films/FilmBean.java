@@ -1,26 +1,33 @@
 package com.sparta.pdf.beans.films;
 
-import com.sparta.pdf.components.Actor;
-import com.sparta.pdf.components.Category;
-import com.sparta.pdf.components.Film;
-import com.sparta.pdf.services.FilmActorRetriever;
-import com.sparta.pdf.services.FilmSearcher;
 
+import com.sparta.pdf.components.Film;
+
+
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.util.List;
 
 @Named
-@RequestScoped
-public class FilmBean {
+@ConversationScoped
+public class FilmBean implements Serializable {
 
     private Film activeFilm;
+//    @Inject
+//    FilmSearcher filmSearcher;
+
     @Inject
-    FilmSearcher filmSearcher;
+    Conversation conversation;
 
     public String setActiveFilm(Film film){
         activeFilm = film;
+        if(conversation.isTransient()){
+            conversation.begin();
+        }
         return "filmDetails";
     }
 
